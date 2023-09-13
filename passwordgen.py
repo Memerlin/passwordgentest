@@ -18,7 +18,7 @@ def generate_password(length=20, use_punctuation=False):
 
     # remember to put a variable first and then ask for input
 
-if __name__ = "__main__": #So it doesn't run when I import this to the UI
+if __name__ = "__main__": # So it doesn't run when I import this to the UI
     option = input('Enter an option to continue. \n[1]Generate a password\n[2]Generate multiple passwords\n')
     if option == '1':
         pass_len = input(
