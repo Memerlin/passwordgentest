@@ -19,9 +19,9 @@ def thank_you():
 
 
 def save_file():
-    with open('created_passwords.txt', 'w', encoding='utf-8') as file: # Creates a new file if it doesn't exist
+    with open('created_passwords.txt', 'w', encoding='utf-8') as file:  # Creates a new file if it doesn't exist
         for item in passwords:
-            file.write("%s\n" % item) # Saves each item in a new line
+            file.write("%s\n" % item)  # Saves each item in a new line
         print("File saved!")
         thank_you()
 
@@ -29,29 +29,32 @@ def save_file():
 def single_pass_popup():
     pass_len = tkinter.simpledialog.askinteger(title="Single Password",
                                                prompt="How long would you like your password to be?")
-    punctuation = tkinter.messagebox.askyesno(title= "Single Password",
-                                              message="Would you like punctuation marks in your password?\n Note: Some sites don't allow punctuation marks on their passwords")
-    if punctuation:
-        passwords.append(generate_password(length=pass_len, use_punctuation=True))
-    else:
-        passwords.append(generate_password(length=pass_len, use_punctuation=False))
-    save_file()
+    if pass_len is not None:
+        punctuation = tkinter.messagebox.askyesno(title='Single Password',
+                                                  message="Would you like punctuation marks in your password?\n Note: Some sites don't allow punctuation marks on their passwords")
+        if punctuation:
+            passwords.append(generate_password(length=pass_len, use_punctuation=True))
+        else:
+            passwords.append(generate_password(length=pass_len, use_punctuation=False))
+        save_file()
 
 
 def multi_passwords():
     pass_amount = tkinter.simpledialog.askinteger(title="Multiple passwords",
                                                   prompt="How many passwords would you like to generate?")
-    multi_pass_len = tkinter.simpledialog.askinteger(title="Multiple passwords",
-                                                     prompt="How long should those passwords be?")
-    answer = tkinter.messagebox.askyesno(title="Multiple passwords",
-                                         message="Would you like punctuation marks in your password?\n Note: Some sites don't allow punctuation marks on their passwords")
-    if answer:
-        for i in range(pass_amount):
-            passwords.append(generate_password(length=multi_pass_len, use_punctuation=True))
-    else:
-        for i in range(pass_amount):
-            passwords.append(generate_password(length=multi_pass_len, use_punctuation=False))
-    save_file()
+    if pass_amount is not None:
+        multi_pass_len = tkinter.simpledialog.askinteger(title="Multiple passwords",
+                                                         prompt="How long should those passwords be?")
+        if multi_pass_len is not None:
+            answer = tkinter.messagebox.askyesno(title="Multiple passwords",
+                                                 message="Would you like punctuation marks in your password?\n Note: Some sites don't allow punctuation marks on their passwords")
+            if answer:
+                for i in range(pass_amount):
+                    passwords.append(generate_password(length=multi_pass_len, use_punctuation=True))
+            else:
+                for i in range(pass_amount):
+                    passwords.append(generate_password(length=multi_pass_len, use_punctuation=False))
+            save_file()
 
 
 mainframe = ttk.Frame(root, padding="3 3 12 12")  # Look up what that padding does
