@@ -36,11 +36,10 @@ def single_pass_popup():
         if answer:
             print(generate_password(pass_len, use_punctuation=True))
             passwords.append(generate_password(pass_len, use_punctuation=True))
-            save_file()
         else:
             print(generate_password(pass_len, use_punctuation=False))
             passwords.append(generate_password(pass_len, use_punctuation=True))
-            save_file()
+        save_file()
 
     window = Toplevel(root)
     window.grid()
@@ -52,6 +51,21 @@ def single_pass_popup():
     ttk.Button(window, text="Accept", command=button_click).grid(column=2, row=4)
 
 
+def multi_passwords():
+    pass_amount = tkinter.simpledialog.askinteger(title="Multiple passwords",
+                                                  prompt="How many passwords would you like to generate?")
+    multi_pass_len = tkinter.simpledialog.askinteger(title="Multiple passwords",
+                                                     prompt="How long should those passwords be?")
+    answer = tkinter.messagebox.askyesno(message="Would you like punctuation marks in your password?\n Note: Some sites don't allow punctuation marks on their passwords")
+    if answer:
+        for i in range(pass_amount):
+            passwords.append(generate_password(length=multi_pass_len, use_punctuation=True))
+    else:
+        for i in range(pass_amount):
+            passwords.append(generate_password(length=multi_pass_len, use_punctuation=False))
+    save_file()
+
+
 mainframe = ttk.Frame(root, padding="3 3 12 12")  # Look up what that padding does
 # noinspection PyTypeChecker
 mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
@@ -59,6 +73,9 @@ root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
 ttk.Label(mainframe, text="Welcome!").grid(column=2, row=1)
 ttk.Button(mainframe, text="Generate a single password", command=single_pass_popup).grid(column=2, row=2)
-ttk.Button(mainframe, text="Generate multiple passwords").grid(column=2, row=3, sticky=S)
+ttk.Button(mainframe, text="Generate multiple passwords", command=multi_passwords).grid(column=2, row=3, sticky=S)
+ttk.Label(mainframe,
+          text="Just for the record, the passwords get rewritten everytime. DON'T JUST SAVE THEM THERE! Please use a proper password manager for that").grid(
+    column=2, row=4)
 
 root.mainloop()  # So the window actually stays open until the user closes it
